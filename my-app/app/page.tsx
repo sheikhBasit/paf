@@ -3,74 +3,25 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { fetchNews } from "@/lib/api";
+import { sports } from "@/constants/sports";
+import Link from "next/link";
+
+type NewsArticle = {
+  title: string;
+  description?: string;
+  image?: string;
+  url: string;
+};
 
 
-const NEWS_API =
-  "https://gnews.io/api/v4/search?q=sports&country=pk&lang=en&max=6&apikey=f65e1a6fe6d5334e06c4734662e51c9c";
 
-// Sports data
-const sports = [
-  {
-    title: "Athletics",
-    gender: "Men & Women",
-    img: "/hurdle.jpg",
-    desc: "Athletics covers a wide range of track and field events including sprints, middle and long-distance running, hurdles, high jump, long jump, and throwing disciplines like javelin and discus. It forms the foundation of competitive sports, focusing on speed, endurance, strength, and agility."
-  },
-  {
-    title: "Swimming",
-    gender: "Men & Women",
-    img: "/swimming.jpg",
-    desc: "Swimming competitions include freestyle, butterfly, breaststroke, and backstroke events across various distances. It develops cardiovascular strength, endurance, and body coordination while preparing athletes for both national and international championships."
-  },
-  {
-    title: "Football",
-    gender: "Men & Women",
-    img: "/football.jpg",
-    desc: "Football, the world's most popular team sport, is played by 11 players on each side. The game emphasizes teamwork, tactical awareness, passing, and shooting skills, with leagues and tournaments fostering strong competitive spirit and unity."
-  },
-  {
-    title: "Hockey",
-    gender: "Men & Women",
-    img: "/hockey.jpg",
-    desc: "Hockey is Pakistan's national sport and a symbol of its sporting legacy. The game requires stamina, stick-handling, sharp reflexes, and teamwork, with national and international competitions serving as a stage for athletic pride."
-  },
-  {
-    title: "Basketball",
-    gender: "Men & Women",
-    img: "/basketball.jpg",
-    desc: "Basketball is a fast-paced indoor and outdoor game played by two teams of five. It builds explosive speed, agility, and teamwork, with core skills including dribbling, passing, and shooting skills."
-  },
-  {
-    title: "Volleyball",
-    gender: "Men & Women",
-    img: "/volleyball.jpg",
-    desc: "Volleyball is a dynamic team game played across a net, focusing on spiking, blocking, setting, and serving. It emphasizes reflexes, timing, and coordination, often played in both indoor and beach formats."
-  },
-  {
-    title: "Wrestling",
-    gender: "Men",
-    img: "/wrestling.jpg",
-    desc: "Wrestling is one of the oldest combat sports, testing raw strength, stamina, and technical mastery. Freestyle and traditional wrestling competitions are held under strict rules, where athletes demonstrate discipline and resilience."
-  },
-  {
-    title: "Gymnastics",
-    gender: "Women",
-    img: "/gymnastics.jpg",
-    desc: "Gymnastics is a graceful yet highly demanding sport involving artistic, rhythmic, and floor routines. Athletes combine strength, flexibility, and balance, performing routines that showcase elegance and physical mastery."
-  },
-  {
-    title: "Martial Arts",
-    gender: "Men & Women",
-    img: "/judo.jpg",
-    desc: "Martial arts encompass a wide range of combat systems and traditions, focusing on self-defense, discipline, and physical fitness. It teaches respect, control, and strategy while building strength, agility, and mental focus."
-  },
-];
 
 export default function Home() {
-  const [news, setNews] = useState<any[]>([]);
+  const [news, setNews] = useState<NewsArticle[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMobileMenuOpen = isMenuOpen; // For consistency with your provided code
+  // const isMobileMenuOpen = isMenuOpen; // For consistency with your provided code
 
   // Refs for the carousel
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -79,16 +30,11 @@ export default function Home() {
 
   // Fetch Sports News
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const res = await fetch(NEWS_API);
-        const data = await res.json();
-        setNews(data.articles || []);
-      } catch (err) {
-        console.error("Error fetching news", err);
-      }
+    const loadNews = async () => {
+      const articles = await fetchNews();
+      setNews(articles);
     };
-    fetchNews();
+    loadNews();
   }, []);
 
   // Calculate card width and cards per view based on screen size
@@ -164,7 +110,7 @@ export default function Home() {
     
     {/* Logo and Brand Name (left) */}
     <div className="flex items-center w-full  ">
-      <a href="/" className="flex items-center no-underline">
+      <Link href="/" className="flex items-center no-underline">
         <Image
           src="/logo.svg"   // ✅ SVG file in /public
           alt="Pakistan Sports Federation Logo"
@@ -175,19 +121,19 @@ export default function Home() {
         <h1 className="font-extrabold text-green-700 text-2xl pb-3 uppercase tracking-wide hidden sm:block ">
           Pakistan Sports Federation
         </h1>
-      </a>
+      </Link>
     </div>
     {/* Navigation Links (right on desktop) */}
     <div className="hidden md:flex ml-10 items-center pl-3 space-x-8 font-semibold text-gray-700">
       {["About", "Programs", "News", "Achievements", "Contact"].map((item) => (
-        <a
+        <Link
           key={item}
           href={`#${item.toLowerCase()}`}
           className="hover:text-green-600 transition-colors duration-300 relative group"
         >
           {item}
           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300 group-hover:w-full"></span>
-        </a>
+        </Link>
       ))}
     </div>
 
@@ -224,14 +170,14 @@ export default function Home() {
   >
     <div className="flex flex-col space-y-4 font-semibold text-gray-700">
       {["About", "Programs", "News", "Achievements", "Contact"].map((item) => (
-        <a
+        <Link
           key={item}
           href={`#${item.toLowerCase()}`}
           className="hover:text-green-600 transition-colors duration-300"
           onClick={toggleMenu}
         >
           {item}
-        </a>
+        </Link>
       ))}
     </div>
   </motion.div>
@@ -297,7 +243,7 @@ export default function Home() {
               developing young athletes, fostering school-level competitions,
               and building pathways for international excellence. We work
               alongside schools, coaches, and international bodies to ensure
-              Pakistan's presence and success in global sports.
+              Pakistan&apos;s presence and success in global sports.
             </p>
             <ul className="mt-6 space-y-4 text-lg font-medium text-gray-800">
               <li className="flex items-center gap-3">
@@ -514,13 +460,13 @@ export default function Home() {
                   <div className="p-6">
                     <h3 className="font-bold text-xl text-gray-900 mb-3 line-clamp-2">{article.title}</h3>
                     <p className="text-sm text-gray-600 mb-4 line-clamp-3">{article.description?.slice(0, 150)}...</p>
-                    <a href={article.url} target="_blank" className="text-green-600 hover:text-green-800 text-sm font-semibold inline-flex items-center gap-1 transition-colors duration-300">
+                    <Link href={article.url} target="_blank" className="text-green-600 hover:text-green-800 text-sm font-semibold inline-flex items-center gap-1 transition-colors duration-300">
                       Read More
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right">
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -535,7 +481,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between">
             {/* Footer Logo & Brand */}
             <div className="mb-8 md:mb-0 text-center md:text-left flex flex-col items-center md:items-start">
-              <a href="/">
+              <Link href="/">
                 <Image
                   src="/logo.png"
                   alt="PSF Logo"
@@ -543,24 +489,24 @@ export default function Home() {
                   height={110}
                   className="mx-auto md:mx-0 rounded-full mb-3  transition-transform duration-300 hover:scale-105"
                 />
-              </a>
+              </Link>
             </div>
             
             {/* Contact Info & Socials */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left mb-8 md:mb-0">
               <p className="text-gray-300 text-lg mb-2">
-                <a href="mailto:info@psf.org.pk" className="hover:text-green-500 transition-colors">
+                <Link href="mailto:info@psf.org.pk" className="hover:text-green-500 transition-colors">
                   Email: info@psf.org.pk
-                </a>
+                </Link>
               </p>
               <p className="text-gray-300 text-lg">
-                <a href="tel:+923001234567" className="hover:text-green-500 transition-colors">
+                <Link href="tel:+923001234567" className="hover:text-green-500 transition-colors">
                   Phone: +92 300 1234567
-                </a>
+                </Link>
               </p>
               <div className="mt-6 flex gap-4">
                 {["facebook", "instagram", "twitter", "linkedin"].map((sm, i) => (
-                  <a
+                  <Link
                     key={i}
                     href={`https://www.${sm}.com/pakistansportsfederation`}
                     target="_blank"
@@ -569,7 +515,7 @@ export default function Home() {
                     className="flex items-center justify-center bg-white rounded-full hover:scale-110 transition-transform duration-300"
                   >
                     <Image src={`/${sm}.png`} alt={`${sm} icon`} width={28} height={28} />
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
