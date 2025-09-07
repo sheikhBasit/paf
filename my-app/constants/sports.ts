@@ -3,7 +3,7 @@ export const sports = [
   {
     title: "Athletics",
     gender: "Boys & Girls",
-    img: "/hurdle.jpg",
+    img: "/race.png",
     desc: "Athletics covers a wide range of track and field events including sprints, middle and long-distance running, hurdles, high jump, long jump, and throwing disciplines like javelin and discus. It forms the foundation of competitive sports, focusing on speed, endurance, strength, and agility."
   },
   {
@@ -21,7 +21,7 @@ export const sports = [
   {
     title: "Hockey",
     gender: "Boys & Girls",
-    img: "/hockey.jpg",
+    img: "/hockey.png",
     desc: "Hockey is Pakistan's national sport and a symbol of its sporting legacy. The game requires stamina, stick-handling, sharp reflexes, and teamwork, with national and international competitions serving as a stage for athletic pride."
   },
   {
@@ -39,14 +39,20 @@ export const sports = [
   {
     title: "Badminton",
     gender: "Boys & Girls",
-    img: "/badminton.jpeg", // You'll need to provide an image for badminton
+    img: "/badminton.jpeg", 
     desc: "Badminton is a racquet sport played using racquets to hit a shuttlecock across a net. It's a fast-paced game that requires quick reflexes, agility, and precision, enjoyed by players of all ages and skill levels."
   },
   {
     title: "Boxing",
     gender: "Boys",
-    img: "/boxing.jpeg", // You'll need to provide an image for boxing
+    img: "/boxing.jpeg", 
     desc: "Boxing is a combat sport where two opponents wearing protective gloves throw punches at each other in a boxing ring. It demands immense physical and mental discipline, focusing on strength, endurance, speed, and strategic thinking."
+  },
+  {
+    title: "Table Tennis", // Added Table Tennis
+    gender: "Boys & Girls",
+    img: "/table_tennis.png", // You'll need to provide an image for table tennis
+    desc: "Table Tennis, also known as ping-pong, is a fast-paced racquet sport played by two or four players hitting a lightweight ball across a table using small rackets. It requires quick reflexes, hand-eye coordination, and strategic thinking."
   },
   {
     title: "Wrestling",
