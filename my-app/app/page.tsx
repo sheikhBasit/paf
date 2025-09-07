@@ -527,56 +527,62 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id="footer" className="bg-[#1a1a1a] text-white py-16 font-sans">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-8 md:mb-0 text-center md:text-left flex flex-col items-center md:items-start">
-              <Link href="/">
-                <Image
-                  src="/logo.png"
-                  alt="PSF Logo"
-                  width={110}
-                  height={110}
-                  className="mx-auto md:mx-0 rounded-full mb-3  transition-transform duration-300 hover:scale-105"
-                />
-              </Link>
-            </div>
+     <footer id="footer" className="bg-[#1a1a1a] text-white py-16 font-sans">
+  <div className="container mx-auto px-6">
+    <div className="flex flex-col md:flex-row items-center justify-between">
+      <div className="mb-8 md:mb-0 text-center md:text-left flex flex-col items-center md:items-start">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="PSF Logo"
+            width={110}
+            height={110}
+            className="mx-auto md:mx-0 rounded-full mb-3 transition-transform duration-300 hover:scale-105"
+          />
+        </Link>
+      </div>
 
-            <div className="flex flex-col items-center md:items-start text-center md:text-left mb-8 md:mb-0">
-              <p className="text-gray-300 text-lg mb-2">
-                <Link href="mailto:info@psf.org.pk" className="hover:text-green-500 transition-colors">
-                  Email: info@psf.org.pk
-                </Link>
-              </p>
-              <p className="text-gray-300 text-lg">
-                <Link href="tel:+923001234567" className="hover:text-green-500 transition-colors">
-                  Phone: +92 300 1234567
-                </Link>
-              </p>
-              <div className="mt-6 flex gap-4" id="contact">
-                {["facebook", "instagram", "twitter", "linkedin"].map((sm, i) => (
-                  <Link
-                    key={i}
-                    href={`https://www.${sm}.com/pakistansportsfederation`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${sm} profile`}
-                    className="flex items-center justify-center bg-white rounded-full hover:scale-110 transition-transform duration-300"
-                  >
-                    <Image src={`/${sm}.png`} alt={`${sm} icon`} width={28} height={28} />
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-gray-700 text-center">
-            <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Pakistan Sports Federation. All rights reserved.
-            </p>
-          </div>
+      <div className="flex flex-col items-center md:items-start text-center md:text-left mb-8 md:mb-0">
+        <h3 className="text-xl font-semibold text-green-500 mb-4">Contact Us</h3>
+        <p className="text-gray-300 text-lg mb-2">
+          H 6, St 4, Block Y, Scheme No 2, Shad Bagh
+          <br />
+          Lahore, Pakistan
+        </p>
+        <p className="text-gray-300 text-lg mb-2">
+          <Link href="mailto:admin@psfsport.org" className="hover:text-green-500 transition-colors">
+            Email: admin@psfsport.org
+          </Link>
+        </p>
+        <p className="text-gray-300 text-lg">
+          <Link href="tel:+923249440386" className="hover:text-green-500 transition-colors">
+            Phone: +92 324 9440386
+          </Link>
+        </p>
+        <div className="mt-6 flex gap-4" id="contact">
+          {["facebook", "instagram", "twitter", "linkedin"].map((sm, i) => (
+            <Link
+              key={i}
+              href={`https://www.${sm}.com/pakistansportsfederation`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${sm} profile`}
+              className="flex items-center justify-center bg-white rounded-full hover:scale-110 transition-transform duration-300"
+            >
+              <Image src={`/${sm}.png`} alt={`${sm} icon`} width={28} height={28} />
+            </Link>
+          ))}
         </div>
-      </footer>
+      </div>
+    </div>
+
+    <div className="mt-8 pt-8 border-t border-gray-700 text-center">
+      <p className="text-gray-500 text-sm">
+        © {new Date().getFullYear()} Pakistan Sports Federation. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
