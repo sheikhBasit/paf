@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pakistan Sports Federation",
-  description: "Official website for the Pakistan Sports Federation.",
+  title: "Pakistan School Sport Federation",
+  description: "Official website for the Pakistan School Sport Federation.",
   keywords: ["Sports", "Pakistan", "Federation", "Programs"],
   openGraph: {
     title: "Pakistan Sports Federation",

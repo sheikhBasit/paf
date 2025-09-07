@@ -114,13 +114,13 @@ export default function Home() {
         <Image
           src="/logo.svg"   // ✅ SVG file in /public
           alt="Pakistan Sports Federation Logo"
-          width={65}
-          height={65}
+          width={140}
+          height={140}
           className="rounded-full"
         />
-        <h1 className="font-extrabold text-green-700 text-2xl pb-3 uppercase tracking-wide hidden sm:block ">
+        {/* <h1 className="font-extrabold text-green-700 text-2xl pb-3 uppercase tracking-wide hidden sm:block ">
           Pakistan Sports Federation
-        </h1>
+        </h1> */}
       </Link>
     </div>
     {/* Navigation Links (right on desktop) */}
@@ -271,7 +271,7 @@ export default function Home() {
           </div>
           <div className="relative">
             <Image 
-              src="/about.png" 
+              src="/about.jpeg" 
               alt="About Pakistan Sports Federation" 
               width={750} 
               height={550} 
