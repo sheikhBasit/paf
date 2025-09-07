@@ -27,7 +27,7 @@ export const sports = [
   {
     title: "Basketball",
     gender: "Boys & Girls",
-    img: "/basketball.jpg",
+    img: "/basketball.jpeg",
     desc: "Basketball is a fast-paced indoor and outdoor game played by two teams of five. It builds explosive speed, agility, and teamwork, with core skills including dribbling, passing, and shooting skills."
   },
   {
