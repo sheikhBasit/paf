@@ -14,14 +14,55 @@ type NewsArticle = {
   url: string;
 };
 
+// --- Team Member Type ---
+type TeamMember = {
+  name: string;
+  role: string;
+  image: string;
+  socials?: { platform: string; url: string }[];
+};
 
-
+// --- Sample Team Data ---
+const teamMembers: TeamMember[] = [
+  {
+    name: "Aisha Khan",
+    role: "President",
+    image: "/team/aisha.png", // Replace with actual image paths
+    socials: [
+      { platform: "linkedin", url: "https://linkedin.com/in/aishakhan" },
+      { platform: "twitter", url: "https://twitter.com/aishakhan" },
+    ],
+  },
+  {
+    name: "Bilal Ahmed",
+    role: "Secretary General",
+    image: "/team/bilal.png",
+    socials: [
+      { platform: "linkedin", url: "https://linkedin.com/in/bilalahmed" },
+    ],
+  },
+  {
+    name: "Fatima Ali",
+    role: "Head of Operations",
+    image: "/team/fatima.png",
+    socials: [
+      { platform: "instagram", url: "https://instagram.com/fatimaali" },
+    ],
+  },
+  {
+    name: "Usman Tariq",
+    role: "Technical Director",
+    image: "/team/usman.png",
+    socials: [
+      { platform: "twitter", url: "https://twitter.com/usmantariq" },
+    ],
+  },
+];
 
 export default function Home() {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const isMobileMenuOpen = isMenuOpen; // For consistency with your provided code
 
   // Refs for the carousel
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -42,7 +83,7 @@ export default function Home() {
     const updateCardDimensions = () => {
       if (carouselRef.current) {
         const containerWidth = carouselRef.current.offsetWidth;
-        
+
         // Determine cards per view based on screen width
         if (containerWidth >= 1024) {
           setCardsPerView(3);
@@ -51,7 +92,7 @@ export default function Home() {
         } else {
           setCardsPerView(1);
         }
-        
+
         // Calculate card width based on container width and gap
         const gap = 32; // 8 * 4 (gap-8 = 32px)
         const cardWidth = (containerWidth - (gap * (cardsPerView - 1))) / cardsPerView;
@@ -61,7 +102,7 @@ export default function Home() {
 
     updateCardDimensions();
     window.addEventListener('resize', updateCardDimensions);
-    
+
     return () => {
       window.removeEventListener('resize', updateCardDimensions);
     };
@@ -72,13 +113,13 @@ export default function Home() {
 
   // Navigation functions
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === totalSlides - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
     );
   };
@@ -87,7 +128,7 @@ export default function Home() {
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
-  
+
   // Toggle mobile menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -98,37 +139,35 @@ export default function Home() {
     const interval = setInterval(() => {
       nextSlide();
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, [currentIndex, totalSlides]);
 
   return (
     <div className="bg-gradient-to-b from-green-600 via-white to-gray-100 text-gray-900 text-lg font-sans">
       {/* Navbar */}
-<nav className="fixed top-0 w-full bg-white shadow-lg z-50 transition-all duration-300">
+      <nav className="fixed top-0 w-full bg-white shadow-lg z-50 transition-all duration-300">
   <div className="container px-2 md:px-6 py-2 flex justify-between items-center">
     
-    {/* Logo and Brand Name (left) */}
-    <div className="flex items-center w-full  ">
+    {/* Logo */}
+    <div className="flex items-center">
       <Link href="/" className="flex items-center no-underline">
         <Image
-          src="/logo.svg"   // ✅ SVG file in /public
+          src="/logo.svg"
           alt="Pakistan Sports Federation Logo"
           width={140}
           height={140}
           className="rounded-full"
         />
-        {/* <h1 className="font-extrabold text-green-700 text-2xl pb-3 uppercase tracking-wide hidden sm:block ">
-          Pakistan Sports Federation
-        </h1> */}
       </Link>
     </div>
-    {/* Navigation Links (right on desktop) */}
-    <div className="hidden md:flex ml-10 items-center pl-3 space-x-8 font-semibold text-gray-700">
-      {["About", "Programs", "News", "Achievements", "Contact"].map((item) => (
+
+    {/* Desktop Links */}
+    <div className="hidden md:flex ml-6 items-center pl-2 space-x-6 font-semibold text-gray-700 text-base whitespace-nowrap">
+      {["About", "Programs", "News", "Achievements", "Our Team", "Contact"].map((item) => (
         <Link
           key={item}
-          href={`#${item.toLowerCase()}`}
+          href={`#${item.toLowerCase().replace(" ", "")}`}
           className="hover:text-green-600 transition-colors duration-300 relative group"
         >
           {item}
@@ -137,51 +176,20 @@ export default function Home() {
       ))}
     </div>
 
-    {/* Mobile Menu Button (right on mobile) */}
+    {/* Mobile Menu Button */}
     <button
       onClick={toggleMenu}
       className="md:hidden text-gray-700 focus:outline-none"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="lucide lucide-menu"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <line x1="4" x2="20" y1="12" y2="12" />
         <line x1="4" x2="20" y1="6" y2="6" />
         <line x1="4" x2="20" y1="18" y2="18" />
       </svg>
     </button>
   </div>
-
-  {/* Mobile Menu */}
-  <motion.div
-    initial={{ y: "-100%" }}
-    animate={{ y: isMenuOpen ? "0%" : "-100%" }}
-    transition={{ type: "spring", stiffness: 100, damping: 20 }}
-    className="md:hidden bg-white shadow-lg absolute w-full top-16 left-0 px-4 pb-4"
-  >
-    <div className="flex flex-col space-y-4 font-semibold text-gray-700">
-      {["About", "Programs", "News", "Achievements", "Contact"].map((item) => (
-        <Link
-          key={item}
-          href={`#${item.toLowerCase()}`}
-          className="hover:text-green-600 transition-colors duration-300"
-          onClick={toggleMenu}
-        >
-          {item}
-        </Link>
-      ))}
-    </div>
-  </motion.div>
 </nav>
+
 
       {/* Hero */}
       <section
@@ -230,7 +238,7 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-      
+
       {/* About */}
       <section id="about" className="py-24 px-6 md:px-12 bg-white font-sans">
         <div className="container mx-auto grid md:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -270,28 +278,25 @@ export default function Home() {
             </ul>
           </div>
           <div className="relative">
-            <Image 
-              src="/about.jpeg" 
-              alt="About Pakistan Sports Federation" 
-              width={750} 
-              height={550} 
-              className="rounded-3xl shadow-2xl w-full h-auto transform transition-transform duration-500 hover:scale-105" 
+            <Image
+              src="/about.jpeg"
+              alt="About Pakistan Sports Federation"
+              width={750}
+              height={550}
+              className="rounded-3xl shadow-2xl w-full h-auto transform transition-transform duration-500 hover:scale-105"
             />
-            {/* Green Overlay */}
           </div>
         </div>
       </section>
-      
+
       {/* Programs Carousel */}
       <section id="programs" className="py-20 px-6 font-sans bg-gray-100">
         <div className="container mx-auto relative">
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-gray-800">
             Our Sports Programs
           </h2>
-          
-          {/* Carousel Container */}
+
           <div className="relative overflow-hidden" ref={carouselRef}>
-            {/* Carousel Track */}
             <motion.div
               className="flex"
               animate={{ x: -currentIndex * (cardWidth * cardsPerView + 32) }}
@@ -310,7 +315,6 @@ export default function Home() {
                       className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col"
                       style={{ width: `${cardWidth}px`, height: "520px" }}
                     >
-                      {/* IMAGE SECTION */}
                       <div className="relative w-full h-[300px] overflow-hidden">
                         <Image
                           src={sport.img}
@@ -320,7 +324,6 @@ export default function Home() {
                           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                         />
                       </div>
-                      {/* TEXT SECTION */}
                       <div className="p-6 flex flex-col flex-grow justify-between">
                         <div>
                           <h3 className="font-bold text-2xl text-gray-900 leading-tight">{sport.title}</h3>
@@ -334,9 +337,8 @@ export default function Home() {
               ))}
             </motion.div>
           </div>
-          
-          {/* Navigation Arrows */}
-          <button 
+
+          <button
             onClick={prevSlide}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 focus:outline-none z-10"
             aria-label="Previous slide"
@@ -345,7 +347,7 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <button 
+          <button
             onClick={nextSlide}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 focus:outline-none z-10"
             aria-label="Next slide"
@@ -354,8 +356,7 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          
-          {/* Indicators */}
+
           <div className="flex justify-center mt-8 space-x-2">
             {Array.from({ length: totalSlides }).map((_, index) => (
               <button
@@ -430,6 +431,56 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our Team Section */}
+      {/* Ensure this section has the id="team" for navigation */}
+      <section id="ourteam" className="py-24 px-6 md:px-12 font-sans bg-white">
+        <div className="container mx-auto text-center">
+          <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-800 mb-16">
+            Meet Our Team
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            {teamMembers.map((member, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5, scale: 1.03, transition: { duration: 0.3 } }}
+                className="bg-gray-50 rounded-3xl shadow-xl overflow-hidden p-6 text-center transform transition-all duration-300"
+              >
+                <div className="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-green-500">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-green-600 font-semibold mb-4">{member.role}</p>
+                {member.socials && (
+                  <div className="flex justify-center space-x-4">
+                    {member.socials.map((social, i) => (
+                      <Link
+                        key={i}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${social.platform} profile of ${member.name}`}
+                        className="text-gray-600 hover:text-green-600 transition-colors duration-300"
+                      >
+                        {/* Placeholder for social icons - replace with actual icons */}
+                        {social.platform === "linkedin" && <i className="fab fa-linkedin fa-lg"></i>}
+                        {social.platform === "twitter" && <i className="fab fa-twitter fa-lg"></i>}
+                        {social.platform === "instagram" && <i className="fab fa-instagram fa-lg"></i>}
+                        {/* Add more platforms as needed */}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* News */}
       <section id="news" className="py-24 px-6 md:px-12 bg-gray-100 font-sans">
         <div className="container mx-auto">
@@ -474,12 +525,11 @@ export default function Home() {
           )}
         </div>
       </section>
-      
+
       {/* Footer */}
       <footer id="footer" className="bg-[#1a1a1a] text-white py-16 font-sans">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            {/* Footer Logo & Brand */}
             <div className="mb-8 md:mb-0 text-center md:text-left flex flex-col items-center md:items-start">
               <Link href="/">
                 <Image
@@ -491,8 +541,7 @@ export default function Home() {
                 />
               </Link>
             </div>
-            
-            {/* Contact Info & Socials */}
+
             <div className="flex flex-col items-center md:items-start text-center md:text-left mb-8 md:mb-0">
               <p className="text-gray-300 text-lg mb-2">
                 <Link href="mailto:info@psf.org.pk" className="hover:text-green-500 transition-colors">
@@ -504,7 +553,7 @@ export default function Home() {
                   Phone: +92 300 1234567
                 </Link>
               </p>
-              <div className="mt-6 flex gap-4">
+              <div className="mt-6 flex gap-4" id="contact">
                 {["facebook", "instagram", "twitter", "linkedin"].map((sm, i) => (
                   <Link
                     key={i}
@@ -520,8 +569,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
-          {/* Copyright */}
+
           <div className="mt-8 pt-8 border-t border-gray-700 text-center">
             <p className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Pakistan Sports Federation. All rights reserved.
